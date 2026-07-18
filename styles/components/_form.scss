@@ -68,3 +68,49 @@
   &__body { color: var(--color-text-muted); line-height: $line-height-relaxed; margin-bottom: $spacing-6; }
   &__items { display: flex; flex-direction: column; gap: $spacing-4; }
 }
+
+// Formulário dinâmico do CMS (matéria tipo "formulario")
+.materia-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-5;
+  max-width: 560px;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-1;
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--color-text);
+  }
+
+  input, textarea, select {
+    padding: $spacing-3 $spacing-4;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    width: 100%;
+
+    &:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(0,216,101,0.15);
+      outline: none;
+    }
+  }
+
+  &__success {
+    display: none;
+    padding: $spacing-3 $spacing-4;
+    background: var(--color-primary-light);
+    border-radius: 6px;
+    color: var(--color-secondary);
+    font-weight: $font-weight-medium;
+
+    &.is-visible { display: block; }
+  }
+}

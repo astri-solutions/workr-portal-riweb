@@ -13,9 +13,9 @@ export const siteConfig = {
   },
 
   colors: {
-    primary:   undefined,
-    secondary: undefined,
-    tertiary:  undefined,
+    primary:   "#ff0000",
+    secondary: "#f200ff",
+    tertiary:  "#03ff00",
   },
 
   fonts: {
@@ -39,7 +39,7 @@ export const siteConfig = {
   ],
 
   empresas: [
-    { id: 'principal', label: "Riweb", short: "R" }
+    { id: "principal-1784395631398", label: "Riweb", short: "R" }
   ],
 
   header: { variant: 'sidebar' },

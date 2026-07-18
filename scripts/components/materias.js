@@ -44,7 +44,61 @@ function renderBlock(block) {
   return '';
 }
 
+const FIELD_INPUT = {
+  'texto-curto': (f) => `<input type="text" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`,
+  'e-mail':      (f) => `<input type="email" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`,
+  'telefone':    (f) => `<input type="tel" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`,
+  'texto-longo': (f) => `<textarea name="${f.id}" rows="5" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''}></textarea>`,
+};
+
+function renderFieldInput(f) {
+  const key = (f.type ?? '').toLowerCase();
+  if (FIELD_INPUT[key]) return FIELD_INPUT[key](f);
+  // select-style fields (assunto, empresa/perfil, select with options)
+  const opts = String(f.options ?? '').split(',').map(o => o.trim()).filter(Boolean);
+  if (opts.length > 0) {
+    return `<select name="${f.id}" ${f.required ? 'required' : ''}>
+      <option value="" disabled selected>Selecionar…</option>
+      ${opts.map(o => `<option value="${o}">${o}</option>`).join('')}
+    </select>`;
+  }
+  return `<input type="text" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`;
+}
+
+function renderFormulario(m) {
+  const cfg = m.content ?? {};
+  const fields = Array.isArray(cfg.fields) ? cfg.fields : [];
+  const fieldsHtml = fields.map(f => `
+    <label class="materia-form__field">
+      <span class="materia-form__label">${f.label ?? ''}${f.required ? ' *' : ''}</span>
+      ${renderFieldInput(f)}
+    </label>`).join('');
+
+  return `<article class="materia-card materia-card--form" id="materia-${m.id}">
+    ${m.subtitulo ? `<p class="materia-card__subtitle">${m.subtitulo}</p>` : ''}
+    <form class="materia-form" data-materia-form novalidate>
+      ${fieldsHtml}
+      <button class="btn btn--primary btn--lg" type="submit">${cfg.submitLabel ?? 'Enviar'}</button>
+      <div class="materia-form__success" data-form-success aria-live="polite">${cfg.successMessage ?? 'Mensagem enviada com sucesso!'}</div>
+    </form>
+  </article>`;
+}
+
+function bindForms(container) {
+  container.querySelectorAll('[data-materia-form]').forEach(form => {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      form.querySelector('[data-form-success]')?.classList.add('is-visible');
+      form.reset();
+    });
+  });
+}
+
 function renderMateria(m) {
+  if (m.content && !Array.isArray(m.content) && m.content.kind === 'formulario') {
+    return renderFormulario(m);
+  }
   const blocks = Array.isArray(m.content) ? m.content : [];
   const body = blocks.map(renderBlock).join('') || `<p class="materia-block materia-block--text">${m.subtitulo ?? ''}</p>`;
 
@@ -89,6 +143,7 @@ export async function initMaterias(siteConfig) {
       data: m.data,
       content: m.content,
     })).join('');
+    bindForms(container);
     container.classList.add('materias--loaded');
   } catch {
     // Silently skip — page renders without dynamic content

@@ -1,0 +1,41 @@
+// styles/components/_filter.scss
+@use '../abstracts' as *;
+
+.page-filter {
+  margin-bottom: $spacing-8;
+
+  &__fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-4;
+    align-items: flex-end;
+  }
+}
+
+.select {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--color-text-muted);
+    pointer-events: none;
+  }
+  select {
+    appearance: none;
+    padding: $spacing-2 $spacing-10 $spacing-2 $spacing-3;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    &:focus { border-color: var(--color-primary); outline: none; }
+  }
+}

@@ -1,0 +1,70 @@
+// styles/components/_form.scss
+@use '../abstracts' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;   // 4px — label colado ao seu input
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--color-text);
+  }
+
+  &__input, &__textarea {
+    padding: $spacing-3 $spacing-4;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+
+    &:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(0,216,101,0.15);
+      outline: none;
+    }
+
+    &:invalid:not(:placeholder-shown) {
+      border-color: #dc2626;
+    }
+  }
+
+  &__textarea { resize: vertical; min-height: 120px; }
+}
+
+.contact-form-card {
+  background: var(--color-bg);
+  padding: $spacing-8;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;   // 24px — respiro entre os grupos de campo
+}
+
+.contact-success {
+  display: none;
+  padding: $spacing-4;
+  background: var(--color-primary-light);
+  border-radius: 6px;
+  color: var(--color-secondary);
+  font-weight: $font-weight-medium;
+  &.is-visible { display: block; }
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-12;
+
+  @include respond-down(desktop) { grid-template-columns: 1fr; }
+}
+
+.contact-info {
+  &__title { font-size: $font-size-xl; font-weight: $font-weight-bold; margin-bottom: $spacing-4; }
+  &__body { color: var(--color-text-muted); line-height: $line-height-relaxed; margin-bottom: $spacing-6; }
+  &__items { display: flex; flex-direction: column; gap: $spacing-4; }
+}

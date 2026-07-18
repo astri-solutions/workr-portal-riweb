@@ -32,14 +32,13 @@ export const siteConfig = {
   },
 
   nav: [
-    { id: "central-resultados", label: "Canal teste", href: "/central-resultados.html", children: [] },
     { id: "docs-cvm", label: "Documentos CVM", href: "/documentos-cvm.html", children: [] },
     { id: "fale-ri", label: "Fale com RI", href: "/fale-com-ri.html", children: [] },
     { id: "mailing", label: "Mailing", href: "/mailing.html", children: [] },
   ],
 
   empresas: [
-    { id: "principal-1784395631398", label: "Riweb", short: "R" }
+    { id: 'principal', label: "Riweb", short: "R" }
   ],
 
   header: { variant: 'sidebar' },

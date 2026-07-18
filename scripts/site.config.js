@@ -9,24 +9,26 @@ export const siteConfig = {
     logoOriginal: '/assets/logotipo/logotipo-original.webp',
     logoNegative: '/assets/logotipo/logotipo-negative.webp',
     logoContrast: '/assets/logotipo/logotipo-negative.webp',
-    favicon:      '/favicon.png',
+    favicon:      '/favicon.svg',
   },
 
   colors: {
-    primary:   "#ff0026",
-    secondary: "#0070ff",
-    tertiary:  "#0def81",
+    primary:   undefined,
+    secondary: undefined,
+    tertiary:  undefined,
   },
 
   fonts: {
-    display: "poppins",
-    body:    "inter",
+    display: undefined,
+    body:    undefined,
   },
 
   ticker: {
-    type:      "iframe",
+    type:      "static",
     iframeUrl: "",
-    items: [],
+    items: [
+      { symbol: 'WRLT3', price: 'R$ 00,00', change: '0,00%', direction: 'up' }
+    ],
   },
 
   nav: [
@@ -37,34 +39,15 @@ export const siteConfig = {
   ],
 
   empresas: [
-    { id: 'principal', label: "Riweb", short: 'R' },
+    { id: "principal-1784395631398", label: "Riweb", short: "R" }
   ],
 
-  supabase: {
-    url:      "https://mmhuwlpsgnvoxyuofliq.supabase.co",
-    anonKey:  "sb_publishable_BBSPbQc2kZngiK45ecfXaA_X4NANiGj",
-    portalId: null,
-  },
-
   header: { variant: 'sidebar' },
-
-  seo: {
-    title:             "Riweb - Relações com Investidores",
-    description:       "",
-    googleAnalyticsId: "",
-    clarityId:         "",
-  },
-
-  contact: {
-    email: "",
-  },
-
-  languages: ["pt-BR","en","es"],
 
   restrictedNav: [],
 
   footer: {
-    variant:   'simple',
+    variant: 'simple',
     address:   "",
     email:     "",
     phone:     "",
@@ -77,6 +60,38 @@ export const siteConfig = {
       { label: "Definições de Cookies", href: '/definicao-de-cookies.html' }
     ],
     legalText: "As informações contidas neste site são de caráter meramente informativo e não constituem oferta de valores mobiliários.",
+  },
+
+  splash: {
+    enabled: false,
+    size: 'md',
+    titulo: '',
+    texto: '',
+    conteudo: '',
+    legenda: '',
+    buttons: [],
+  },
+
+  cookies: {
+    enabled: true,
+    layout: 'full',
+    theme: 'light',
+    title: 'Utilizamos cookies',
+    description: 'Usamos cookies para melhorar sua experiência.',
+    acceptLabel: 'Aceitar todos',
+    rejectLabel: 'Rejeitar',
+    showReject: true,
+    showCustomize: false,
+  },
+
+  errorPages: [],
+
+  banner: [],
+
+  supabase: {
+    url:      "https://mmhuwlpsgnvoxyuofliq.supabase.co",
+    anonKey:  "sb_publishable_BBSPbQc2kZngiK45ecfXaA_X4NANiGj",
+    portalId: "b7f60951-ff5e-4432-9002-0c39f6cd0657",
   },
 
 };

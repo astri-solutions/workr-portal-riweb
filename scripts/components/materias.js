@@ -44,24 +44,28 @@ function renderBlock(block) {
   return '';
 }
 
+// Keys match FormField['type'] from apps/web-admin NovoFormularioPage.tsx
 const FIELD_INPUT = {
-  'texto-curto': (f) => `<input type="text" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`,
-  'e-mail':      (f) => `<input type="email" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`,
-  'telefone':    (f) => `<input type="tel" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`,
-  'texto-longo': (f) => `<textarea name="${f.id}" rows="5" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''}></textarea>`,
+  text:     (f) => `<input type="text" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`,
+  email:    (f) => `<input type="email" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`,
+  phone:    (f) => `<input type="tel" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`,
+  textarea: (f) => `<textarea name="${f.id}" rows="5" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''}></textarea>`,
+  company:  (f) => `<input type="text" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`,
+  date:     (f) => `<input type="date" name="${f.id}" ${f.required ? 'required' : ''} />`,
+  checkbox: (f) => `<input type="checkbox" name="${f.id}" ${f.required ? 'required' : ''} />`,
 };
 
 function renderFieldInput(f) {
   const key = (f.type ?? '').toLowerCase();
-  if (FIELD_INPUT[key]) return FIELD_INPUT[key](f);
-  // select-style fields (assunto, empresa/perfil, select with options)
+  // 'subject' and 'select' render as <select> whenever options are configured
   const opts = String(f.options ?? '').split(',').map(o => o.trim()).filter(Boolean);
-  if (opts.length > 0) {
+  if ((key === 'subject' || key === 'select') && opts.length > 0) {
     return `<select name="${f.id}" ${f.required ? 'required' : ''}>
       <option value="" disabled selected>Selecionar…</option>
       ${opts.map(o => `<option value="${o}">${o}</option>`).join('')}
     </select>`;
   }
+  if (FIELD_INPUT[key]) return FIELD_INPUT[key](f);
   return `<input type="text" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`;
 }
 

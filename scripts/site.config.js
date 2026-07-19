@@ -32,7 +32,7 @@ export const siteConfig = {
   },
 
   nav: [
-    { id: "docs-cvm", label: "Documentos CVM", href: "/documentos-cvm.html", children: [] },
+    { id: "docs-cvm", label: "Documentos CVM", href: "/documentos-cvm.html", pageType: "lista", children: [] },
     { id: "mailing", label: "Mailing", href: "/mailing.html", children: [] },
     { id: "xfg1mh9", label: "Teste 3", href: "/", pageType: "lista", children: [] },
   ],
@@ -41,7 +41,7 @@ export const siteConfig = {
     { id: 'principal', label: "Riweb", short: "R" }
   ],
 
-  header: { variant: 'sidebar' },
+  header: { variant: 'tabmenu' },
 
   restrictedNav: [],
 

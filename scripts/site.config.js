@@ -38,7 +38,7 @@ export const siteConfig = {
   ],
 
   empresas: [
-    { id: "principal-1784395631398", label: "Riweb", short: "R" }
+    { id: 'principal', label: "Riweb", short: "R" }
   ],
 
   header: { variant: 'tabmenu' },
@@ -72,15 +72,19 @@ export const siteConfig = {
   },
 
   cookies: {
-    enabled: true,
-    layout: 'full',
-    theme: 'light',
-    title: 'Utilizamos cookies',
-    description: 'Usamos cookies para melhorar sua experiência.',
-    acceptLabel: 'Aceitar todos',
-    rejectLabel: 'Rejeitar',
-    showReject: true,
-    showCustomize: false,
+    "theme": "light",
+    "title": "Utilizamos cookies",
+    "layout": "right",
+    "buttons": [],
+    "enabled": true,
+    "linkUrl": "/politica-de-privacidade",
+    "linkText": "Política de Privacidade",
+    "showReject": true,
+    "acceptLabel": "Aceitar todos",
+    "description": "Usamos cookies para melhorar sua experiência, personalizar conteúdos e analisar o tráfego do nosso site.",
+    "rejectLabel": "Rejeitar",
+    "showCustomize": true,
+    "customizeLabel": "Personalizar"
   },
 
   errorPages: [],

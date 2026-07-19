@@ -9,7 +9,7 @@ export const siteConfig = {
     logoOriginal: '/assets/logotipo/logotipo-original.webp',
     logoNegative: '/assets/logotipo/logotipo-negative.webp',
     logoContrast: '/assets/logotipo/logotipo-negative.webp',
-    favicon:      '/favicon.svg',
+    favicon:      '/favicon.png',
   },
 
   colors: {
@@ -47,14 +47,14 @@ export const siteConfig = {
 
   footer: {
     variant: 'simple',
-    address:   "",
-    email:     "",
-    phone:     "",
-    hours:     "",
-    copyright: "©Copyright Riweb 2026",
+    address:   "Av. Brigadeiro Faria Lima, 2.277, 17º andar — São Paulo/SP, CEP 01452-000",
+    email:     "workrlite@astri.com",
+    phone:     "(11) 1234-5678",
+    hours:     "Segunda a sexta, das 08h às 18h, exceto feriados.",
+    copyright: "©Copyright Workr Lite - Riweb 2026",
     social: { linkedin: "#", instagram: "#", facebook: "#" },
     legalLinks: [
-      { label: "Termos e Condições", href: '/termos-e-condicoes.html' },
+      { label: "Termos", href: '/termos-e-condicoes.html' },
       { label: "Política de Privacidade", href: '/politica-de-privacidade.html' },
       { label: "Definições de Cookies", href: '/definicao-de-cookies.html' }
     ],

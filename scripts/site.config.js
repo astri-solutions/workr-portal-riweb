@@ -19,8 +19,8 @@ export const siteConfig = {
   },
 
   fonts: {
-    display: undefined,
-    body:    undefined,
+    display: "Playfair Display",
+    body:    "Playfair Display",
   },
 
   ticker: {

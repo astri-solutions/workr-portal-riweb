@@ -33,7 +33,6 @@ export const siteConfig = {
 
   nav: [
     { id: "docs-cvm", label: "Documentos CVM", href: "/documentos-cvm.html", children: [] },
-    { id: "fale-ri", label: "Fale com RI", href: "/fale-com-ri.html", children: [] },
     { id: "mailing", label: "Mailing", href: "/mailing.html", children: [] },
   ],
 

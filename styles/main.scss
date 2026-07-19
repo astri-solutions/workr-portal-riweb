@@ -22,5 +22,7 @@
 @use 'components/calendar';
 @use 'components/prose';
 @use 'components/error-page';
+@use 'components/splash';
+@use 'components/cookies';
 @use 'layout/page-section';
 @use 'abstracts/contrast';

@@ -113,4 +113,15 @@
 
     &.is-visible { display: block; }
   }
+
+  &__error {
+    display: none;
+    padding: $spacing-3 $spacing-4;
+    background: rgba(220, 38, 38, 0.08);
+    border-radius: 6px;
+    color: #dc2626;
+    font-weight: $font-weight-medium;
+
+    &.is-visible { display: block; }
+  }
 }

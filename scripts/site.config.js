@@ -38,7 +38,7 @@ export const siteConfig = {
   ],
 
   empresas: [
-    { id: 'principal', label: "Riweb", short: "R" }
+    { id: "principal-1784395631398", label: "Riweb", short: "R" }
   ],
 
   header: { variant: 'tabmenu' },
@@ -54,9 +54,9 @@ export const siteConfig = {
     copyright: "©Copyright Workr Lite - Riweb 2026",
     social: { linkedin: "#", instagram: "#", facebook: "#" },
     legalLinks: [
-      { label: "Termos", href: '/termos-e-condicoes.html' },
-      { label: "Política de Privacidade", href: '/politica-de-privacidade.html' },
-      { label: "Definições de Cookies", href: '/definicao-de-cookies.html' }
+      { label: "Termos e Condições", href: "/termos-e-condicoes.html" },
+      { label: "Política de Privacidade", href: "/politica-de-privacidade.html" },
+      { label: "Definições de Cookies", href: "/definicao-de-cookies.html" }
     ],
     legalText: "As informações contidas neste site são de caráter meramente informativo e não constituem oferta de valores mobiliários.",
   },

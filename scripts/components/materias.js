@@ -80,21 +80,50 @@ function renderFormulario(m) {
 
   return `<article class="materia-card materia-card--form" id="materia-${m.id}">
     ${m.subtitulo ? `<p class="materia-card__subtitle">${m.subtitulo}</p>` : ''}
-    <form class="materia-form" data-materia-form novalidate>
+    <form class="materia-form" data-materia-form data-materia-id="${m.id}" novalidate>
       ${fieldsHtml}
       <button class="btn btn--primary btn--lg" type="submit">${cfg.submitLabel ?? 'Enviar'}</button>
+      <div class="materia-form__error" data-form-error aria-live="polite"></div>
       <div class="materia-form__success" data-form-success aria-live="polite">${cfg.successMessage ?? 'Mensagem enviada com sucesso!'}</div>
     </form>
   </article>`;
 }
 
-function bindForms(container) {
+function bindForms(container, sb) {
   container.querySelectorAll('[data-materia-form]').forEach(form => {
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
       if (!form.reportValidity()) return;
-      form.querySelector('[data-form-success]')?.classList.add('is-visible');
-      form.reset();
+
+      const errorEl = form.querySelector('[data-form-error]');
+      const successEl = form.querySelector('[data-form-success]');
+      errorEl?.classList.remove('is-visible');
+      successEl?.classList.remove('is-visible');
+
+      const values = {};
+      new FormData(form).forEach((v, k) => { values[k] = String(v); });
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalLabel = submitBtn?.textContent;
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Enviando…'; }
+
+      try {
+        const res = await fetch(`${sb.url}/functions/v1/submit-form`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': sb.anonKey },
+          body: JSON.stringify({ portalId: sb.portalId, materiaId: form.dataset.materiaId, values }),
+        });
+        if (!res.ok) throw new Error('submit failed');
+        successEl?.classList.add('is-visible');
+        form.reset();
+      } catch {
+        if (errorEl) {
+          errorEl.textContent = 'Não foi possível enviar agora. Tente novamente em instantes.';
+          errorEl.classList.add('is-visible');
+        }
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
+      }
     });
   });
 }
@@ -147,7 +176,7 @@ export async function initMaterias(siteConfig) {
       data: m.data,
       content: m.content,
     })).join('');
-    bindForms(container);
+    bindForms(container, sb);
     container.classList.add('materias--loaded');
   } catch {
     // Silently skip — page renders without dynamic content

@@ -6,6 +6,8 @@ import { initHeader }  from './components/header.js';
 import { initFooter }  from './components/footer.js';
 import { initSearch }  from './components/search.js';
 import { initMaterias } from './components/materias.js';
+import { initSplash }  from './components/splash.js';
+import { initCookies } from './components/cookies.js';
 import './icons.js';
 import './reveal.js';
 import './accordion.js';
@@ -41,6 +43,8 @@ initHeader(siteConfig);
 initFooter(siteConfig);
 initSearch();
 initMaterias(siteConfig);
+initSplash(siteConfig);
+initCookies(siteConfig);
 
 // ── Banner hero — shortcuts e CTA dinâmicos de siteConfig.nav ─────────────────
 const shortcutsInner = document.querySelector('[data-hero-shortcuts]');

@@ -42,7 +42,7 @@ export const siteConfig = {
     { id: 'principal', label: "Riweb", short: "R" }
   ],
 
-  header: { variant: 'sidebar' },
+  header: { variant: 'tabmenu' },
 
   restrictedNav: [],
 

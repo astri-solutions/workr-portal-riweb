@@ -33,13 +33,13 @@ export const siteConfig = {
 
   nav: [
     { id: "docs-cvm", label: "Documentos CVM", href: "/documentos-cvm.html", pageType: "lista", children: [] },
-    { id: "mailing", label: "Mailing", href: "/mailing.html", children: [] },
-    { id: "xfg1mh9", label: "Teste 3", href: "/", pageType: "lista", children: [] },
-    { id: "qniwaw0", label: "Teste canal", href: "/", pageType: "formulario", children: [] },
+    { id: "mailing", label: "Fale com RI", href: "/mailing.html", pageType: "show", children: [] },
+    { id: "xfg1mh9", label: "Central de Resultados", href: "/", pageType: "lista", children: [] },
+    { id: "qniwaw0", label: "Atas e Assembleias", href: "/", pageType: "lista", children: [] },
   ],
 
   empresas: [
-    { id: 'principal', label: "Riweb", short: "R" }
+    { id: "principal-1784395631398", label: "Riweb", short: "R" }
   ],
 
   header: { variant: 'tabmenu' },

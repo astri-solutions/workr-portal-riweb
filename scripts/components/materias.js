@@ -145,15 +145,14 @@ function renderMateria(m) {
   </article>`;
 }
 
-export async function initMaterias(siteConfig) {
-  const sb = siteConfig?.supabase;
-  if (!sb?.url || !sb?.anonKey || !sb?.portalId) return;
-
-  const pageId = resolvePageId(siteConfig.nav);
-  if (!pageId) return;
-
-  const container = document.querySelector('[data-materias]');
-  if (!container) return;
+/**
+ * Fetches published matérias for a given pageId and renders them into
+ * container. Shared by initMaterias (single-page) and the sidebar/tabmenu
+ * inline panel loaders (one page's worth of matérias per channel, loaded
+ * on demand without navigating away).
+ */
+export async function loadMateriasInto(pageId, container, sb) {
+  if (!sb?.url || !sb?.anonKey || !sb?.portalId || !pageId || !container) return false;
 
   try {
     const url = `${sb.url}/rest/v1/portal_materias?portal_id=eq.${encodeURIComponent(sb.portalId)}&page_id=eq.${encodeURIComponent(pageId)}&status=eq.publicado&order=data.desc`;
@@ -165,9 +164,9 @@ export async function initMaterias(siteConfig) {
       },
     });
 
-    if (!res.ok) return;
+    if (!res.ok) return false;
     const materias = await res.json();
-    if (!Array.isArray(materias) || materias.length === 0) return;
+    if (!Array.isArray(materias) || materias.length === 0) return false;
 
     container.innerHTML = materias.map(m => renderMateria({
       id: m.id,
@@ -178,7 +177,21 @@ export async function initMaterias(siteConfig) {
     })).join('');
     bindForms(container, sb);
     container.classList.add('materias--loaded');
+
+    // The blank-page template always ships a sibling "Em construção"
+    // placeholder (page.js converts .page-empty to it on load, before this
+    // fetch resolves) — once real content renders, that placeholder is
+    // stale and must go, or both show stacked on top of each other.
+    container.parentElement?.querySelector('.page-empty, .em-construcao')?.remove();
+    return true;
   } catch {
-    // Silently skip — page renders without dynamic content
+    return false;
   }
+}
+
+export async function initMaterias(siteConfig) {
+  const sb = siteConfig?.supabase;
+  const pageId = resolvePageId(siteConfig.nav);
+  const container = document.querySelector('[data-materias]');
+  await loadMateriasInto(pageId, container, sb);
 }

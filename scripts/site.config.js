@@ -19,8 +19,8 @@ export const siteConfig = {
   },
 
   fonts: {
-    display: "Playfair Display",
-    body:    "Playfair Display",
+    display: "Nunito",
+    body:    "Inter",
   },
 
   ticker: {
@@ -39,7 +39,7 @@ export const siteConfig = {
   ],
 
   empresas: [
-    { id: 'principal', label: "Riweb", short: "R" }
+    { id: "principal-1784395631398", label: "Riweb", short: "R" }
   ],
 
   header: { variant: 'tabmenu' },

@@ -69,6 +69,20 @@ function renderFieldInput(f) {
   return `<input type="text" name="${f.id}" placeholder="${f.placeholder ?? ''}" ${f.required ? 'required' : ''} />`;
 }
 
+function renderInfoCard(infoCard) {
+  if (!infoCard?.enabled) return '';
+  const paragrafos = String(infoCard.corpo ?? '')
+    .split(/\n\s*\n/)
+    .map(p => p.trim())
+    .filter(Boolean)
+    .map(p => `<p class="materia-info-card__text">${p.replace(/\n/g, '<br>')}</p>`)
+    .join('');
+  return `<aside class="materia-info-card">
+    ${infoCard.titulo ? `<h3 class="materia-info-card__title">${infoCard.titulo}</h3>` : ''}
+    ${paragrafos}
+  </aside>`;
+}
+
 function renderFormulario(m) {
   const cfg = m.content ?? {};
   const fields = Array.isArray(cfg.fields) ? cfg.fields : [];
@@ -78,7 +92,7 @@ function renderFormulario(m) {
       ${renderFieldInput(f)}
     </label>`).join('');
 
-  return `<article class="materia-card materia-card--form" id="materia-${m.id}">
+  const formHtml = `<div class="materia-card materia-card--form">
     ${m.subtitulo ? `<p class="materia-card__subtitle">${m.subtitulo}</p>` : ''}
     <form class="materia-form" data-materia-form data-materia-id="${m.id}" novalidate>
       ${fieldsHtml}
@@ -86,6 +100,15 @@ function renderFormulario(m) {
       <div class="materia-form__error" data-form-error aria-live="polite"></div>
       <div class="materia-form__success" data-form-success aria-live="polite">${cfg.successMessage ?? 'Mensagem enviada com sucesso!'}</div>
     </form>
+  </div>`;
+
+  const infoCardHtml = renderInfoCard(cfg.infoCard);
+  if (!infoCardHtml) {
+    return `<article class="materia-card--form-wrap" id="materia-${m.id}">${formHtml}</article>`;
+  }
+  return `<article class="materia-form-layout" id="materia-${m.id}">
+    ${formHtml}
+    ${infoCardHtml}
   </article>`;
 }
 
@@ -221,5 +244,5 @@ export async function initMaterias(siteConfig) {
   const sb = siteConfig?.supabase;
   const pageId = resolvePageId(siteConfig.nav);
   const container = document.querySelector('[data-materias]');
-  await loadMateriasInto(pageId, container, sb);
+  return loadMateriasInto(pageId, container, sb);
 }

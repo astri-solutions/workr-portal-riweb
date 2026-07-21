@@ -1,6 +1,7 @@
 // scripts/tab-menu.js
 import { siteConfig } from './site.config.js';
 import { loadMateriasInto } from './components/materias.js';
+import { loadDocumentosInto } from './components/documentos.js';
 
 const TAB_NAV_ID = 'home-tabs';
 
@@ -50,7 +51,8 @@ function buildTabMenu() {
     loaded.add(slug);
     const panel = panelArea.querySelector(`[data-panel="${slug}"]`);
     const container = panel?.querySelector('[data-materias]');
-    await loadMateriasInto(slug, container, sb);
+    const found = await loadMateriasInto(slug, container, sb);
+    if (!found) await loadDocumentosInto(slug, container, sb);
   }
 
   tabs.forEach(tab => {

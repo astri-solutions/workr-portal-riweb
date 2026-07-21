@@ -1,6 +1,7 @@
 // scripts/sidebar-nav.js
 import { siteConfig } from './site.config.js';
 import { loadMateriasInto } from './components/materias.js';
+import { loadDocumentosInto } from './components/documentos.js';
 
 // Sidebar-model portals (header.variant === 'sidebar') show every channel's
 // matéria content inline, next to the menu — clicking a menu item loads its
@@ -50,7 +51,8 @@ function buildSidebar() {
     loaded.add(slug);
     const panel = contentArea.querySelector(`[data-panel="${slug}"]`);
     const container = panel?.querySelector('[data-materias]');
-    await loadMateriasInto(slug, container, sb);
+    const found = await loadMateriasInto(slug, container, sb);
+    if (!found) await loadDocumentosInto(slug, container, sb);
   }
 
   btns.forEach(btn => {

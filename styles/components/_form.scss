@@ -136,3 +136,38 @@
     &.is-visible { display: block; }
   }
 }
+
+// ── Formulário com card de contato ao lado ("Fale conosco") ─────────────────
+.materia-form-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: $spacing-8;
+  align-items: start;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.materia-info-card {
+  background: var(--color-bg-alt, #fafafa);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: $spacing-6;
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: var(--color-secondary);
+    margin: 0 0 $spacing-4;
+  }
+
+  &__text {
+    font-size: $font-size-sm;
+    color: var(--color-text-muted, #6f6f6f);
+    line-height: 1.7;
+    margin: 0 0 $spacing-4;
+
+    &:last-child { margin-bottom: 0; }
+  }
+}

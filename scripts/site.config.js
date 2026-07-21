@@ -13,7 +13,7 @@ export const siteConfig = {
   },
 
   colors: {
-    primary:   "#002aff",
+    primary:   "#0a9afa",
     secondary: "#002455",
     tertiary:  "#FF3838",
   },

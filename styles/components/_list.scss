@@ -25,9 +25,15 @@
     flex: 1;
     min-width: 0;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: $spacing-1;
+    align-items: baseline;
+    gap: $spacing-2;
+
+    // Below tablet: stack date above name instead of side by side.
+    @include respond-down(tablet) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-1;
+    }
   }
 
   &__date {
@@ -37,10 +43,14 @@
     white-space: nowrap;
   }
 
-  // The inline dash only makes sense in a one-line layout — date now sits
-  // above the title, so it's visually redundant.
   &__sep {
-    display: none;
+    flex-shrink: 0;
+    color: var(--color-border);
+
+    // Only makes sense in the side-by-side (desktop) layout.
+    @include respond-down(tablet) {
+      display: none;
+    }
   }
 
   &__title {

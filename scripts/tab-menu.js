@@ -2,6 +2,7 @@
 import { siteConfig } from './site.config.js';
 import { loadMateriasInto } from './components/materias.js';
 import { loadDocumentosInto } from './components/documentos.js';
+import { loadResultadosInto } from './components/resultados.js';
 
 const TAB_NAV_ID = 'home-tabs';
 
@@ -56,7 +57,9 @@ function buildTabMenu() {
     const panel = panelArea.querySelector(`[data-panel="${slug}"]`);
     const container = panel?.querySelector('[data-materias]');
     const found = await loadMateriasInto(slug, container, sb);
-    if (!found) await loadDocumentosInto(channelBySlug.get(slug) ?? slug, container, sb, siteConfig);
+    const ch = channelBySlug.get(slug) ?? slug;
+    const found2 = found || await loadDocumentosInto(ch, container, sb, siteConfig);
+    if (!found2) await loadResultadosInto(ch, container, sb, siteConfig);
   }
 
   tabs.forEach(tab => {

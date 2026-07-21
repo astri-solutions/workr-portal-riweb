@@ -3,30 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Sidebar — Workr Lite Teste RI</title>
+    <title>Home — Workr Lite RI</title>
     <meta name="description" content="Relações com Investidores — Transparência e acesso às informações da companhia." />
     <link rel="stylesheet" href="/styles/main.scss" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
     <div id="site-topbar"></div>
-    <header id="site-header" data-hide-nav></header>
+    <header id="site-header" data-hide-nav data-navbar-variant="navbar-blur"></header>
 
     <main>
 
-      <!-- ── Sidebar Layout ─────────────────────────────────────────────────── -->
-      <section class="page-section page-section--flush-top" aria-label="Conteúdo RI">
+      <!-- ── Carousel Banner — rendered by carousel.js from siteConfig ──────── -->
+      <div class="carousel" id="home-carousel" data-slides="v2" aria-label="Banner principal">
+      </div>
+
+      <!-- ── Tab Menu Section — nav + panels populated by tab-menu.js ──────── -->
+      <section class="page-section" aria-label="Conteúdo RI">
         <div class="page-section__container">
-          <div class="sidebar-layout">
 
-            <!-- Sidebar nav — populated by sidebar-nav.js from siteConfig.nav -->
-            <aside class="sidebar-nav" aria-label="Seções de conteúdo">
-              <ul class="sidebar-nav__list" data-sidebar-nav="home-sidebar"></ul>
-            </aside>
+          <nav class="tab-menu__nav" data-tab-nav="home-tabs" aria-label="Seções de conteúdo">
+            <!-- populated by tab-menu.js from siteConfig.nav -->
+          </nav>
 
-            <!-- Content panels — populated by sidebar-nav.js -->
-            <div class="sidebar-content"></div>
+          <div class="tab-menu__panels">
+            <!-- populated by tab-menu.js — each panel starts as .page-empty -->
           </div>
+
         </div>
       </section>
 
@@ -48,6 +51,7 @@
     </div>
 
     <script type="module" src="/scripts/page.js"></script>
-    <script type="module" src="/scripts/sidebar-nav.js"></script>
+    <script type="module" src="/scripts/carousel.js"></script>
+    <script type="module" src="/scripts/tab-menu.js"></script>
   </body>
 </html>

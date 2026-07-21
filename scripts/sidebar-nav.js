@@ -2,6 +2,7 @@
 import { siteConfig } from './site.config.js';
 import { loadMateriasInto } from './components/materias.js';
 import { loadDocumentosInto } from './components/documentos.js';
+import { loadResultadosInto } from './components/resultados.js';
 
 // Sidebar-model portals (header.variant === 'sidebar') show every channel's
 // matéria content inline, next to the menu — clicking a menu item loads its
@@ -56,7 +57,9 @@ function buildSidebar() {
     const panel = contentArea.querySelector(`[data-panel="${slug}"]`);
     const container = panel?.querySelector('[data-materias]');
     const found = await loadMateriasInto(slug, container, sb);
-    if (!found) await loadDocumentosInto(channelBySlug.get(slug) ?? slug, container, sb, siteConfig);
+    const ch = channelBySlug.get(slug) ?? slug;
+    const found2 = found || await loadDocumentosInto(ch, container, sb, siteConfig);
+    if (!found2) await loadResultadosInto(ch, container, sb, siteConfig);
   }
 
   btns.forEach(btn => {

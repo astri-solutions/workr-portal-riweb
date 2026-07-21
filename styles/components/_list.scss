@@ -18,11 +18,66 @@
     &:hover { background: var(--color-surface); }
   }
 
-  &__info { flex: 1; min-width: 0; }
-  &__title { font-weight: $font-weight-medium; margin-bottom: $spacing-1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  &__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    gap: $spacing-2;
+  }
+
+  &__date {
+    flex-shrink: 0;
+    font-size: $font-size-xs;
+    color: var(--color-text-muted);
+    background: var(--color-surface);
+    border-radius: 4px;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+
+  &__sep {
+    flex-shrink: 0;
+    color: var(--color-border);
+  }
+
+  &__title {
+    font-weight: $font-weight-medium;
+    color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   &__meta { font-size: $font-size-xs; color: var(--color-text-muted); }
   &__badge { font-size: $font-size-xs; padding: 2px 8px; border-radius: 99px; background: var(--color-primary-light); color: var(--color-secondary); font-weight: $font-weight-medium; white-space: nowrap; }
   &__link { display: flex; align-items: center; gap: $spacing-2; font-size: $font-size-sm; color: var(--color-primary); font-weight: $font-weight-medium; white-space: nowrap; transition: gap 0.2s; &:hover { gap: $spacing-3; } }
+
+  &__icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-secondary);
+    transition: border-color 0.15s, background 0.15s;
+
+    svg { width: 20px; height: 22px; }
+
+    &:hover { border-color: var(--color-primary); background: var(--color-primary-light); }
+  }
+}
+
+.resultados-year-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: var(--color-text-muted);
+  margin: $spacing-6 0 $spacing-3;
+
+  &:first-child { margin-top: 0; }
 }
 
 .result-list {

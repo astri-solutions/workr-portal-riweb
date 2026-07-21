@@ -7,6 +7,7 @@ import { initFooter }  from './components/footer.js';
 import { initSearch }  from './components/search.js';
 import { initMaterias } from './components/materias.js';
 import { initDocumentos } from './components/documentos.js';
+import { initResultados } from './components/resultados.js';
 import { initSplash }  from './components/splash.js';
 import { initCookies } from './components/cookies.js';
 import './icons.js';
@@ -43,7 +44,9 @@ initTopbar(siteConfig);
 initHeader(siteConfig);
 initFooter(siteConfig);
 initSearch();
-initMaterias(siteConfig).then(found => initDocumentos(siteConfig, found));
+initMaterias(siteConfig)
+  .then(found => initDocumentos(siteConfig, found))
+  .then(found => initResultados(siteConfig, found));
 initSplash(siteConfig);
 initCookies(siteConfig);
 

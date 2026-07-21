@@ -39,10 +39,11 @@ export const siteConfig = {
   ],
 
   empresas: [
-    { id: "principal-1784395631398", label: "Riweb", short: "R" }
+    { id: "principal-1784395631398", label: "Riweb", short: "R" },
+    { id: "suatv-1784651711506", label: "SuaTV", short: "S" }
   ],
 
-  header: { variant: 'sidebar' },
+  header: { variant: 'tabmenu' },
 
   restrictedNav: [],
 

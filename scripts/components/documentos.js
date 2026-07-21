@@ -35,8 +35,8 @@ function extOf(path) {
 
 // Inline vector badge — crisp at any size, unlike the raster-in-SVG assets
 // under /assets/icons (those embed a bitmap pattern fill and blur when
-// scaled down to list-icon size).
-function fileBadgeSvg(pathOrUrl) {
+// scaled down to list-icon size). Exported for reuse by resultados.js.
+export function fileBadgeSvg(pathOrUrl) {
   const label = EXT_LABEL[extOf(pathOrUrl)] ?? 'LINK';
   return `<svg width="26" height="30" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M2 3.5C2 2.67157 2.67157 2 3.5 2H14.5L23 10.5V26.5C23 27.3284 22.3284 28 21.5 28H3.5C2.67157 28 2 27.3284 2 26.5V3.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
@@ -250,9 +250,9 @@ export async function loadDocumentosInto(pageEntry, container, sb, siteConfig = 
 }
 
 export async function initDocumentos(siteConfig, alreadyRendered) {
-  if (alreadyRendered) return;
+  if (alreadyRendered) return true;
   const sb = siteConfig?.supabase;
   const entry = resolvePageEntry(siteConfig.nav);
   const container = document.querySelector('[data-materias]');
-  await loadDocumentosInto(entry, container, sb, siteConfig);
+  return loadDocumentosInto(entry, container, sb, siteConfig);
 }

@@ -46,13 +46,17 @@ function buildSidebar() {
   const btns = navList.querySelectorAll('.sidebar-nav__btn');
   const panels = contentArea.querySelectorAll('.sidebar-panel');
 
+  const channelBySlug = new Map(channels.map(ch => [
+    ch.id ?? ch.slug ?? ch.label.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''), ch,
+  ]));
+
   async function loadPanel(slug) {
     if (loaded.has(slug)) return;
     loaded.add(slug);
     const panel = contentArea.querySelector(`[data-panel="${slug}"]`);
     const container = panel?.querySelector('[data-materias]');
     const found = await loadMateriasInto(slug, container, sb);
-    if (!found) await loadDocumentosInto(slug, container, sb);
+    if (!found) await loadDocumentosInto(channelBySlug.get(slug) ?? slug, container, sb, siteConfig);
   }
 
   btns.forEach(btn => {

@@ -86,6 +86,7 @@ function renderInfoCard(infoCard) {
 function renderFormulario(m) {
   const cfg = m.content ?? {};
   const fields = Array.isArray(cfg.fields) ? cfg.fields : [];
+  const hasRequired = fields.some(f => f.required);
   const fieldsHtml = fields.map(f => `
     <label class="materia-form__field">
       <span class="materia-form__label">${f.label ?? ''}${f.required ? ' *' : ''}</span>
@@ -93,10 +94,15 @@ function renderFormulario(m) {
     </label>`).join('');
 
   const formHtml = `<div class="materia-card materia-card--form">
+    ${m.titulo ? `<h2 class="materia-card__title">${m.titulo}</h2>` : ''}
     ${m.subtitulo ? `<p class="materia-card__subtitle">${m.subtitulo}</p>` : ''}
     <form class="materia-form" data-materia-form data-materia-id="${m.id}" novalidate>
       ${fieldsHtml}
-      <button class="btn btn--primary btn--lg" type="submit">${cfg.submitLabel ?? 'Enviar'}</button>
+      ${hasRequired ? `<p class="materia-form__hint">Todos os campos com (*) são obrigatórios</p>` : ''}
+      <div class="materia-form__actions">
+        <button class="btn btn--outline" type="reset">Limpar</button>
+        <button class="btn btn--primary btn--lg" type="submit">${cfg.submitLabel ?? 'Enviar'}</button>
+      </div>
       <div class="materia-form__error" data-form-error aria-live="polite"></div>
       <div class="materia-form__success" data-form-success aria-live="polite">${cfg.successMessage ?? 'Mensagem enviada com sucesso!'}</div>
     </form>

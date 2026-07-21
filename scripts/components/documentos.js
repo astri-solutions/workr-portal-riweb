@@ -153,9 +153,12 @@ function renderDocumentos(entry, docs, container, sb, siteConfig) {
 
   const years = [...new Set(docs.map(yearOf).filter(Boolean))].sort((a, b) => b - a);
 
+  // With more than one empresa, documents must never mix between companies
+  // in the same view — default to the principal (first) empresa rather than
+  // an "all companies" state, for both the tab and select UIs.
   const filters = {
     ano: '',
-    empresa: showEmpresaTabs ? (empresas[0]?.id ?? '') : '',
+    empresa: empresas.length > 1 ? (empresas[0]?.id ?? '') : '',
   };
 
   function passesFilters(d) {
@@ -165,16 +168,23 @@ function renderDocumentos(entry, docs, container, sb, siteConfig) {
   }
 
   function controlsHtml() {
-    const parts = [`<div class="filter-bar__group"><span class="filter-bar__label">Filtrar por:</span>`];
-    parts.push(`<div class="select"><select data-doc-filter="ano" aria-label="Ano">
-      <option value="">Todos os anos</option>
-      ${years.map(y => `<option value="${y}"${filters.ano === String(y) ? ' selected' : ''}>${y}</option>`).join('')}
-    </select></div>`);
+    const parts = [`<div class="filter-bar__group">`];
+    parts.push(`<label class="filter-box">
+      <span class="filter-box__label">Filtrar por Ano</span>
+      <select data-doc-filter="ano">
+        <option value="">Todos os anos</option>
+        ${years.map(y => `<option value="${y}"${filters.ano === String(y) ? ' selected' : ''}>${y}</option>`).join('')}
+      </select>
+      <span class="filter-box__chevron" aria-hidden="true"></span>
+    </label>`);
     if (showEmpresaFilter) {
-      parts.push(`<div class="select"><select data-doc-filter="empresa" aria-label="Empresa">
-        <option value="">Todas as empresas</option>
-        ${empresas.map(e => `<option value="${e.id}"${filters.empresa === e.id ? ' selected' : ''}>${e.label}</option>`).join('')}
-      </select></div>`);
+      parts.push(`<label class="filter-box">
+        <span class="filter-box__label">Filtrar por Empresa</span>
+        <select data-doc-filter="empresa">
+          ${empresas.map(e => `<option value="${e.id}"${filters.empresa === e.id ? ' selected' : ''}>${e.label}</option>`).join('')}
+        </select>
+        <span class="filter-box__chevron" aria-hidden="true"></span>
+      </label>`);
     }
     parts.push(`</div>`);
     return `<div class="filter-bar">${parts.join('')}</div>`;

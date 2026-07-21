@@ -64,13 +64,14 @@ export const siteConfig = {
   },
 
   splash: {
-    enabled: false,
-    size: 'md',
-    titulo: '',
-    texto: '',
-    conteudo: '',
-    legenda: '',
-    buttons: [],
+    "size": "md",
+    "texto": "",
+    "titulo": "",
+    "buttons": [],
+    "enabled": false,
+    "legenda": "",
+    "conteudo": "",
+    "imageUrl": null
   },
 
   cookies: {

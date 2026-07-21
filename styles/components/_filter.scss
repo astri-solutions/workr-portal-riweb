@@ -34,8 +34,64 @@
     border-radius: 6px;
     background: var(--color-bg);
     color: var(--color-text);
+    font-size: 14px;
+    text-align: center;
+    text-align-last: center;
     cursor: pointer;
     transition: border-color 0.2s;
     &:focus { border-color: var(--color-primary); outline: none; }
+  }
+}
+
+// Two-line filter box (small label above, value below) — used by the
+// data-driven documentos.js/resultados.js filter bars.
+.filter-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 180px;
+  padding: 8px 36px 8px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+
+  &:hover { border-color: var(--color-text-muted); background: var(--color-bg); }
+  &:focus-within { border-color: var(--color-secondary); background: var(--color-bg); }
+  &:focus-within &__chevron { transform: translateY(-50%) rotate(180deg); }
+
+  &__label {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    pointer-events: none;
+  }
+
+  select {
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+    font-weight: $font-weight-semibold;
+    color: var(--color-text);
+    cursor: pointer;
+    &:focus { outline: none; }
+  }
+
+  &__chevron {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--color-text-muted);
+    pointer-events: none;
+    transition: transform 0.15s;
   }
 }

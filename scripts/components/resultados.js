@@ -10,7 +10,8 @@ import { fileBadgeSvg } from './documentos.js';
 function looksLikeResultadosPage(entry) {
   const slug = String(entry?.id ?? '').toLowerCase();
   const href = String(entry?.href ?? '').toLowerCase();
-  return slug.includes('resultado') || href.includes('resultado');
+  const label = String(entry?.label ?? '').toLowerCase();
+  return slug.includes('resultado') || href.includes('resultado') || label.includes('resultado');
 }
 
 function fileUrl(sb, filePath) {
@@ -88,9 +89,12 @@ function renderResultados(periodos, arquivosByPeriodo, container, sb, siteConfig
 
   const years = [...new Set(periodos.map(periodYear).filter(Boolean))].sort((a, b) => b - a);
 
+  // With more than one empresa, results/documents must never mix between
+  // companies in the same view — default to the principal (first) empresa
+  // rather than an "all companies" state, for both the tab and select UIs.
   const filters = {
     ano: '',
-    empresa: showEmpresaTabs ? (empresas[0]?.id ?? '') : '',
+    empresa: empresas.length > 1 ? (empresas[0]?.id ?? '') : '',
   };
 
   function passesFilters(p) {
@@ -100,16 +104,23 @@ function renderResultados(periodos, arquivosByPeriodo, container, sb, siteConfig
   }
 
   function controlsHtml() {
-    const parts = [`<div class="filter-bar__group"><span class="filter-bar__label">Filtrar por:</span>`];
-    parts.push(`<div class="select"><select data-res-filter="ano" aria-label="Ano">
-      <option value="">Todos os anos</option>
-      ${years.map(y => `<option value="${y}"${filters.ano === String(y) ? ' selected' : ''}>${y}</option>`).join('')}
-    </select></div>`);
+    const parts = [`<div class="filter-bar__group">`];
+    parts.push(`<label class="filter-box">
+      <span class="filter-box__label">Filtrar por Ano</span>
+      <select data-res-filter="ano">
+        <option value="">Todos os anos</option>
+        ${years.map(y => `<option value="${y}"${filters.ano === String(y) ? ' selected' : ''}>${y}</option>`).join('')}
+      </select>
+      <span class="filter-box__chevron" aria-hidden="true"></span>
+    </label>`);
     if (showEmpresaFilter) {
-      parts.push(`<div class="select"><select data-res-filter="empresa" aria-label="Empresa">
-        <option value="">Todas as empresas</option>
-        ${empresas.map(e => `<option value="${e.id}"${filters.empresa === e.id ? ' selected' : ''}>${e.label}</option>`).join('')}
-      </select></div>`);
+      parts.push(`<label class="filter-box">
+        <span class="filter-box__label">Filtrar por Empresa</span>
+        <select data-res-filter="empresa">
+          ${empresas.map(e => `<option value="${e.id}"${filters.empresa === e.id ? ' selected' : ''}>${e.label}</option>`).join('')}
+        </select>
+        <span class="filter-box__chevron" aria-hidden="true"></span>
+      </label>`);
     }
     parts.push(`</div>`);
     return `<div class="filter-bar">${parts.join('')}</div>`;

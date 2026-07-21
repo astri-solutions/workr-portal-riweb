@@ -4,43 +4,43 @@
 .doc-list {
   display: flex;
   flex-direction: column;
-  gap: $spacing-2;
+  gap: $spacing-4;
 
   &__item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: $spacing-4;
-    padding: $spacing-4 $spacing-5;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    background: var(--color-surface);
-    transition: border-color 0.15s, background 0.15s;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-border);
+    transition: color 0.15s;
 
-    &:hover { border-color: var(--color-primary); background: var(--color-bg); }
+    &:hover .doc-list__date,
+    &:hover .doc-list__title {
+      color: var(--color-secondary);
+    }
   }
 
   &__info {
     flex: 1;
     min-width: 0;
     display: flex;
-    align-items: baseline;
-    gap: $spacing-2;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-1;
   }
 
   &__date {
     flex-shrink: 0;
     font-size: 14px;
     color: var(--color-text-muted);
-    background: var(--color-surface);
-    border-radius: 4px;
-    padding: 3px 8px;
     white-space: nowrap;
   }
 
+  // The inline dash only makes sense in a one-line layout — date now sits
+  // above the title, so it's visually redundant.
   &__sep {
-    flex-shrink: 0;
-    color: var(--color-border);
+    display: none;
   }
 
   &__title {

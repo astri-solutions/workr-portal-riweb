@@ -93,7 +93,7 @@ function renderResultados(periodos, arquivosByPeriodo, container, sb, siteConfig
   // companies in the same view — default to the principal (first) empresa
   // rather than an "all companies" state, for both the tab and select UIs.
   const filters = {
-    ano: '',
+    ano: years.length === 1 ? String(years[0]) : '',
     empresa: empresas.length > 1 ? (empresas[0]?.id ?? '') : '',
   };
 

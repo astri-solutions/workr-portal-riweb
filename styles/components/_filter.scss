@@ -44,7 +44,9 @@
 }
 
 // Two-line filter box (small label above, value below) — used by the
-// data-driven documentos.js/resultados.js filter bars.
+// data-driven documentos.js/resultados.js filter bars. This is the standard
+// pattern for any future data-driven filter list on the site — see
+// README.md "Padrão de filtros e listas".
 .filter-box {
   position: relative;
   display: flex;
@@ -70,15 +72,21 @@
 
   select {
     appearance: none;
+    width: 100%;
     border: none;
     background: transparent;
     padding: 0;
     margin: 0;
     font-size: 15px;
-    font-weight: $font-weight-semibold;
+    font-weight: $font-weight-regular;
     color: var(--color-text);
     cursor: pointer;
     &:focus { outline: none; }
+
+    // Best-effort — option padding is only honored by some browser engines
+    // (Firefox mostly; Chromium's native <option> popup ignores most box
+    // model properties). Harmless where unsupported.
+    option { padding: $spacing-2 $spacing-3; }
   }
 
   &__chevron {
@@ -93,5 +101,9 @@
     border-top: 5px solid var(--color-text-muted);
     pointer-events: none;
     transition: transform 0.15s;
+  }
+
+  @include respond-down(tablet) {
+    width: 100%;
   }
 }

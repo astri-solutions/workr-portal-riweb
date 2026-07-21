@@ -9,6 +9,18 @@
     border-bottom: 2px solid var(--color-border);
     margin-bottom: $spacing-8;
     flex-wrap: wrap;
+
+    // Below tablet: keep tabs on one line with their own horizontal scroll
+    // instead of wrapping — scoped to this nav so the page itself never
+    // gains horizontal scroll.
+    @include respond-down(tablet) {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; }
+    }
   }
 
   &__tab {
@@ -32,9 +44,11 @@
       font-weight: $font-weight-semibold;
     }
 
-    @include respond-down(mobile) {
+    @include respond-down(tablet) {
       padding: $spacing-2 $spacing-4;
       font-size: $font-size-xs;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
   }
 

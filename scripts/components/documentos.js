@@ -19,13 +19,13 @@ function resolvePageEntry(nav) {
   return undefined;
 }
 
-const EXT_ICON = {
-  pdf: 'pdf.svg',
-  xls: 'excel.svg', xlsx: 'excel.svg',
-  doc: 'doc.svg', docx: 'doc.svg',
-  ppt: 'ppt.svg', pptx: 'ppt.svg',
-  mp3: 'audio.svg', wav: 'audio.svg', m4a: 'audio.svg',
-  mp4: 'video.svg', mov: 'video.svg', avi: 'video.svg',
+const EXT_LABEL = {
+  pdf: 'PDF',
+  xls: 'XLS', xlsx: 'XLS',
+  doc: 'DOC', docx: 'DOC',
+  ppt: 'PPT', pptx: 'PPT',
+  mp3: 'MP3', wav: 'WAV', m4a: 'AUD',
+  mp4: 'MP4', mov: 'MOV', avi: 'AVI',
 };
 
 function extOf(path) {
@@ -33,8 +33,16 @@ function extOf(path) {
   return m ? m[1].toLowerCase() : '';
 }
 
-function iconFor(pathOrUrl) {
-  return EXT_ICON[extOf(pathOrUrl)] ?? 'download.svg';
+// Inline vector badge — crisp at any size, unlike the raster-in-SVG assets
+// under /assets/icons (those embed a bitmap pattern fill and blur when
+// scaled down to list-icon size).
+function fileBadgeSvg(pathOrUrl) {
+  const label = EXT_LABEL[extOf(pathOrUrl)] ?? 'LINK';
+  return `<svg width="26" height="30" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M2 3.5C2 2.67157 2.67157 2 3.5 2H14.5L23 10.5V26.5C23 27.3284 22.3284 28 21.5 28H3.5C2.67157 28 2 27.3284 2 26.5V3.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M14.5 2V9.5C14.5 10.0523 14.9477 10.5 15.5 10.5H23" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    <text x="12.5" y="21" text-anchor="middle" font-size="6.5" font-weight="700" letter-spacing="0.2" font-family="inherit" fill="currentColor">${label}</text>
+  </svg>`;
 }
 
 function fileUrl(sb, filePath) {
@@ -71,12 +79,13 @@ function docItemHtml(d, sb) {
   const title = titleOf(d);
   return `<li class="doc-list__item">
     <div class="doc-list__info">
-      <span class="doc-list__title">${title}</span>
       <span class="doc-list__date">${formatDate(d.created_at)}</span>
+      <span class="doc-list__sep" aria-hidden="true">—</span>
+      <span class="doc-list__title">${title}</span>
     </div>
     <div class="doc-list__actions">
-      <a href="${href}" class="doc-list__link" aria-label="Baixar ${title}" target="_blank" rel="noopener">
-        <img src="/assets/icons/${iconFor(d.file_path ?? d.external_link ?? '')}" width="20" height="20" alt="" />
+      <a href="${href}" class="doc-list__link doc-list__icon" aria-label="Baixar ${title}" target="_blank" rel="noopener">
+        ${fileBadgeSvg(d.file_path ?? d.external_link ?? '')}
       </a>
     </div>
   </li>`;
@@ -143,17 +152,14 @@ function renderDocumentos(entry, docs, container, sb, siteConfig) {
   const showEmpresaFilter = empresas.length > 1 && variant === 'tabmenu';
 
   const years = [...new Set(docs.map(yearOf).filter(Boolean))].sort((a, b) => b - a);
-  const tipos = [...new Set(docs.map(d => extOf(d.file_path ?? d.external_link ?? '')).filter(Boolean))].sort();
 
   const filters = {
     ano: '',
-    tipo: '',
     empresa: showEmpresaTabs ? (empresas[0]?.id ?? '') : '',
   };
 
   function passesFilters(d) {
     if (filters.ano && String(yearOf(d)) !== filters.ano) return false;
-    if (filters.tipo && extOf(d.file_path ?? d.external_link ?? '') !== filters.tipo) return false;
     if (filters.empresa && d.entity_id !== filters.empresa) return false;
     return true;
   }
@@ -164,12 +170,6 @@ function renderDocumentos(entry, docs, container, sb, siteConfig) {
       <option value="">Todos os anos</option>
       ${years.map(y => `<option value="${y}"${filters.ano === String(y) ? ' selected' : ''}>${y}</option>`).join('')}
     </select></div>`);
-    if (listType === 'lista' && tipos.length > 0) {
-      parts.push(`<div class="select"><select data-doc-filter="tipo" aria-label="Tipo">
-        <option value="">Todos os tipos</option>
-        ${tipos.map(t => `<option value="${t}"${filters.tipo === t ? ' selected' : ''}>${t.toUpperCase()}</option>`).join('')}
-      </select></div>`);
-    }
     if (showEmpresaFilter) {
       parts.push(`<div class="select"><select data-doc-filter="empresa" aria-label="Empresa">
         <option value="">Todas as empresas</option>
@@ -199,9 +199,6 @@ function renderDocumentos(entry, docs, container, sb, siteConfig) {
   function bind() {
     container.querySelector('[data-doc-filter="ano"]')?.addEventListener('change', e => {
       filters.ano = e.target.value; render();
-    });
-    container.querySelector('[data-doc-filter="tipo"]')?.addEventListener('change', e => {
-      filters.tipo = e.target.value; render();
     });
     container.querySelector('[data-doc-filter="empresa"]')?.addEventListener('change', e => {
       filters.empresa = e.target.value; render();

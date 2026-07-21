@@ -101,7 +101,7 @@ function renderFormulario(m) {
       ${hasRequired ? `<p class="materia-form__hint">Todos os campos com (*) são obrigatórios</p>` : ''}
       <div class="materia-form__actions">
         <button class="btn btn--outline" type="reset">Limpar</button>
-        <button class="btn btn--primary btn--lg" type="submit">${cfg.submitLabel ?? 'Enviar'}</button>
+        <button class="btn btn--primary" type="submit">${cfg.submitLabel ?? 'Enviar'}</button>
       </div>
       <div class="materia-form__error" data-form-error aria-live="polite"></div>
       <div class="materia-form__success" data-form-success aria-live="polite">${cfg.successMessage ?? 'Mensagem enviada com sucesso!'}</div>

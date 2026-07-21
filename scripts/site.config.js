@@ -39,10 +39,10 @@ export const siteConfig = {
   ],
 
   empresas: [
-    { id: 'principal', label: "Riweb", short: "R" }
+    { id: "principal-1784395631398", label: "Riweb", short: "R" }
   ],
 
-  header: { variant: 'tabmenu' },
+  header: { variant: 'sidebar' },
 
   restrictedNav: [],
 
